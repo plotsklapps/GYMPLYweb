@@ -1,5 +1,6 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:gymplyweb/firebase_options.dart';
 import 'package:gymplyweb/widgets/main_scroller.dart';
@@ -10,6 +11,16 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const GymplyWeb());
+}
+
+class MyCustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => <PointerDeviceKind>{
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+    PointerDeviceKind.stylus,
+  };
 }
 
 class GymplyWeb extends StatelessWidget {
@@ -64,6 +75,7 @@ class GymplyWeb extends StatelessWidget {
         ),
         useMaterial3: true,
       ),
+      scrollBehavior: MyCustomScrollBehavior(),
       home: const MainScroller(),
     );
   }

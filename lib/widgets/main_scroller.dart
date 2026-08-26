@@ -70,18 +70,29 @@ class _MainScrollerState extends State<MainScroller> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Listener(
-        onPointerSignal: _handlePointerSignal,
-        child: PageView(
-          controller: _controller,
-          scrollDirection: Axis.vertical,
-          physics: const NeverScrollableScrollPhysics(),
-          children: const <Widget>[
-            ScreenOne(),
-            ScreenTwo(),
-            ScreenThree(),
-            ScreenFour(),
-          ],
+      body: GestureDetector(
+        onVerticalDragEnd: (details) {
+          if (_isAnimating) return;
+          if (details.primaryVelocity! < -100 &&
+              _controller.page! < _pageCount - 1) {
+            _scrollToPage((_controller.page! + 1).round());
+          } else if (details.primaryVelocity! > 100 && _controller.page! > 0) {
+            _scrollToPage((_controller.page! - 1).round());
+          }
+        },
+        child: Listener(
+          onPointerSignal: _handlePointerSignal,
+          child: PageView(
+            controller: _controller,
+            scrollDirection: Axis.vertical,
+            physics: const NeverScrollableScrollPhysics(),
+            children: const <Widget>[
+              ScreenOne(),
+              ScreenTwo(),
+              ScreenThree(),
+              ScreenFour(),
+            ],
+          ),
         ),
       ),
     );
