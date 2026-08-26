@@ -1,0 +1,23 @@
+# GYMPLY
+
+GYMPLY is an open-source, 100% free, and ad-free offline workout tracker for Android. It is designed for minimalist, local-only workout logging with no cloud, no accounts, and total privacy.
+
+## Core Features
+- **100% Private**: Your data stays on your device. No cloud syncing or tracking.
+- **Extensive Exercise Database**: 4000+ exercises with clear visuals.
+- **Strong Insights**: Detailed statistics and history of your progress.
+- **Offline First**: Train anywhere without an internet connection.
+- **Nostr Ready**: Optional private sharing via the Nostr protocol.
+
+## Website Experience
+The website provides a vertical scrolling presentation of GYMPLY's features across four main screens:
+- **Screen 1**: Landing & Mission.
+- **Screen 2**: Privacy & Local-first philosophy.
+- **Screen 3**: Exercise Library & Statistics.
+- **Screen 4**: Open Source & Community.
+
+## Links
+- [Official Website](https://gymply.app/)
+- [GitHub Repository](https://github.com/plotsklapps/gymply)
+- [Sitemap](https://gymply.app/sitemap.xml)
+- [Nostr Integration Info](https://gymply.app/nostr)

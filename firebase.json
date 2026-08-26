@@ -1,1 +1,26 @@
-{"hosting":{"public":"build/web","ignore":["firebase.json","**/.*","**/node_modules/**"],"rewrites":[{"source":"**","destination":"/index.html"}]},"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"gymplyapp","configurations":{"web":"1:319450241016:web:6fdc418e1b99c9fe89e80d"}}}}}}
+{"hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "headers": [
+      {
+        "source": "**/*.@(js|css|png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|otf|ico)",
+        "headers": [
+          {
+            "key": "Cache-Control",
+            "value": "max-age=31536000"
+          }
+        ]
+      }
+    ],
+    "rewrites": [
+      {
+        "source": "!**/*.map",
+        "destination": "/index.html"
+      }
+    ]
+  },
+"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"gymplyapp","configurations":{"web":"1:319450241016:web:6fdc418e1b99c9fe89e80d"}}}}}}
