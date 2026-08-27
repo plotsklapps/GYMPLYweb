@@ -71,12 +71,17 @@ class _MainScrollerState extends State<MainScroller> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: GestureDetector(
-        onVerticalDragEnd: (details) {
+        behavior: HitTestBehavior.opaque,
+        onVerticalDragEnd: (DragEndDetails details) {
           if (_isAnimating) return;
+
+          // Swipe gevoeligheid instellen
           if (details.primaryVelocity! < -100 &&
               _controller.page! < _pageCount - 1) {
+            // Swipe omhoog -> Volgende pagina
             _scrollToPage((_controller.page! + 1).round());
           } else if (details.primaryVelocity! > 100 && _controller.page! > 0) {
+            // Swipe omlaag -> Vorige pagina
             _scrollToPage((_controller.page! - 1).round());
           }
         },

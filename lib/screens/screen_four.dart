@@ -51,15 +51,14 @@ class _ScreenFourState extends State<ScreenFour> {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> screenshots = .generate(
+    final List<String> screenshots = List<String>.generate(
       _screenshotCount,
       (int index) => 'assets/images/screenshots/screenshot-${index + 1}.png',
     );
 
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
-          final bool isMobile = constraints.maxWidth < 800;
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        final bool isMobile = constraints.maxWidth < 800;
 
           return Column(
             children: <Widget>[

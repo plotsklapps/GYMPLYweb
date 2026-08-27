@@ -28,6 +28,8 @@ class ScreenTwo extends StatelessWidget {
       children: <Widget>[
         Center(
           child: SingleChildScrollView(
+            // Disable internal scroll to allow PageView to handle snapping
+            physics: const NeverScrollableScrollPhysics(),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
               child: Column(

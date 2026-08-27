@@ -7,9 +7,8 @@ class ScreenThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
           final double screenHeight = constraints.maxHeight;
           final double screenWidth = constraints.maxWidth;
           final bool isMobile = screenWidth < 800;
