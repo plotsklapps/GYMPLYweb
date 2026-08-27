@@ -138,7 +138,6 @@ class _ScreenFourState extends State<ScreenFour> {
             ],
           );
         },
-      ),
     );
   }
 }
