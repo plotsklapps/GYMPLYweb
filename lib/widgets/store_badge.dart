@@ -22,29 +22,96 @@ class StoreBadge extends StatefulWidget {
 class _StoreBadgeState extends State<StoreBadge> {
   bool _isHovered = false;
 
+  void _showWipDialog(BuildContext context) {
+    unawaited(
+      FirebaseAnalytics.instance.logEvent(
+        name: 'wip_badge_click',
+        parameters: <String, Object>{'badge_type': 'app_store'},
+      ),
+    );
+
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: const Color(0xFF1A1A1A),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+              side: BorderSide(
+                color: const Color(0xFFFCB075).withAlpha(128),
+                width: 1.5,
+              ),
+            ),
+            title: const Row(
+              children: <Widget>[
+                Icon(Icons.apple, color: Color(0xFFFCB075), size: 28),
+                SizedBox(width: 10),
+                Text(
+                  'iOS VERSION COMING SOON',
+                  style: TextStyle(
+                    color: Color(0xFFFCB075),
+                    fontFamily: 'Bebas Neue',
+                    fontSize: 22,
+                    letterSpacing: 1.1,
+                  ),
+                ),
+              ],
+            ),
+            content: const Text(
+              'The GYMPLY iOS app is currently in active development. '
+              'Stay tuned for updates!',
+              style: TextStyle(
+                color: Color(0xFFDEDEDE),
+                fontFamily: 'Teko',
+                fontSize: 19,
+                height: 1.2,
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  'GOT IT',
+                  style: TextStyle(
+                    color: Color(0xFFFCB075),
+                    fontFamily: 'Bebas Neue',
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Widget badgeContent;
+
     if (widget.isWorkInProgress) {
-      return Stack(
+      badgeContent = Stack(
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: <Widget>[
-          // Dimmed badge image
+          // Apple logo badge clearly visible behind
           Opacity(
-            opacity: 0.6,
+            opacity: 0.85,
             child: Image.asset(widget.asset, height: 45, fit: BoxFit.contain),
           ),
-          // Yellow / Black street construction hazard tape banner
+          // Sleek & small construction tape banner
           Transform.rotate(
-            angle: -0.12,
+            angle: -0.1,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(4),
+              borderRadius: BorderRadius.circular(3),
               child: CustomPaint(
                 painter: const HazardStripesPainter(),
                 child: Container(
-                  margin: const EdgeInsets.symmetric(vertical: 3),
+                  margin: const EdgeInsets.symmetric(vertical: 2),
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 8,
+                    horizontal: 6,
                     vertical: 1,
                   ),
                   color: Colors.black,
@@ -53,9 +120,9 @@ class _StoreBadgeState extends State<StoreBadge> {
                     style: TextStyle(
                       color: Color(0xFFFFC107),
                       fontFamily: 'Bebas Neue',
-                      fontSize: 13,
+                      fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
+                      letterSpacing: 1,
                     ),
                   ),
                 ),
@@ -64,6 +131,8 @@ class _StoreBadgeState extends State<StoreBadge> {
           ),
         ],
       );
+    } else {
+      badgeContent = Image.asset(widget.asset, height: 45, fit: BoxFit.contain);
     }
 
     return MouseRegion(
@@ -72,7 +141,9 @@ class _StoreBadgeState extends State<StoreBadge> {
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: () {
-          if (widget.onTap != null) {
+          if (widget.isWorkInProgress) {
+            _showWipDialog(context);
+          } else if (widget.onTap != null) {
             unawaited(
               FirebaseAnalytics.instance.logEvent(
                 name: 'badge_click',
@@ -89,10 +160,10 @@ class _StoreBadgeState extends State<StoreBadge> {
           }
         },
         child: AnimatedScale(
-          scale: _isHovered ? 1.05 : 1.0,
+          scale: _isHovered ? 1.05 : 1,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
-          child: Image.asset(widget.asset, height: 45, fit: BoxFit.contain),
+          child: badgeContent,
         ),
       ),
     );
@@ -111,10 +182,10 @@ class HazardStripesPainter extends CustomPainter {
     canvas.drawRect(Rect.fromLTWH(0, 0, size.width, size.height), yellowPaint);
 
     // Draw black diagonal stripes
-    const double stripeWidth = 6;
+    const double stripeWidth = 4;
     final Path path = Path();
     for (
-      double x = -size.height;
+      double x = 0 - size.height;
       x < size.width + size.height;
       x += stripeWidth * 2
     ) {
