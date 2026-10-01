@@ -62,7 +62,7 @@ class ScreenFive extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
                               _ReviewCard(
-                                reviewerName: 'Rishav Dev Sharma',
+                                reviewerName: 'Rishav',
                                 reviewerInitial: 'R',
                                 reviewText:
                                     'I really like the app and the offline '
@@ -87,7 +87,7 @@ class ScreenFive extends StatelessWidget {
                               ),
                               SizedBox(height: 12),
                               _ReviewCard(
-                                reviewerName: 'Harith Haroon',
+                                reviewerName: 'Harith',
                                 reviewerInitial: 'H',
                                 reviewText:
                                     'What I like most is how well the '
@@ -106,7 +106,7 @@ class ScreenFive extends StatelessWidget {
                               ),
                               SizedBox(height: 12),
                               _ReviewCard(
-                                reviewerName: 'Kim van Wijk',
+                                reviewerName: 'Kim',
                                 reviewerInitial: 'K',
                                 reviewText:
                                     'Great app, everything works as you '
@@ -130,7 +130,7 @@ class ScreenFive extends StatelessWidget {
                             children: <Widget>[
                               Expanded(
                                 child: _ReviewCard(
-                                  reviewerName: 'Rishav Dev Sharma',
+                                  reviewerName: 'Rishav',
                                   reviewerInitial: 'R',
                                   reviewText:
                                       'I really like the app and the offline '
@@ -156,7 +156,7 @@ class ScreenFive extends StatelessWidget {
                               SizedBox(width: 20),
                               Expanded(
                                 child: _ReviewCard(
-                                  reviewerName: 'Harith Haroon',
+                                  reviewerName: 'Harith',
                                   reviewerInitial: 'H',
                                   reviewText:
                                       'What I like most is how well the '
@@ -177,7 +177,7 @@ class ScreenFive extends StatelessWidget {
                               SizedBox(width: 20),
                               Expanded(
                                 child: _ReviewCard(
-                                  reviewerName: 'Kim van Wijk',
+                                  reviewerName: 'Kim',
                                   reviewerInitial: 'K',
                                   reviewText:
                                       'Great app, everything works as you '
@@ -210,12 +210,17 @@ class ScreenFive extends StatelessWidget {
                           'download/gymply.apk',
                         ),
                       ),
-                      const SizedBox(width: 40),
+                      const SizedBox(width: 24),
                       StoreBadge(
                         asset: 'assets/images/googlelogo.png',
                         onTap: () => _launchUrl(
                           'https://play.google.com/store/apps/details?id=dev.plotsklapps.gymply',
                         ),
+                      ),
+                      const SizedBox(width: 24),
+                      const StoreBadge(
+                        asset: 'assets/images/applelogo.png',
+                        isWorkInProgress: true,
                       ),
                     ],
                   ).animate().fadeIn(delay: 800.ms, duration: 400.ms),

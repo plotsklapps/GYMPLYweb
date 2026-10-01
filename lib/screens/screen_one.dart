@@ -76,12 +76,17 @@ class ScreenOne extends StatelessWidget {
                   'download/gymply.apk',
                 ),
               ),
-              const SizedBox(width: 40),
+              const SizedBox(width: 24),
               StoreBadge(
                 asset: 'assets/images/googlelogo.png',
                 onTap: () => _launchUrl(
                   'https://play.google.com/store/apps/details?id=dev.plotsklapps.gymply',
                 ),
+              ),
+              const SizedBox(width: 24),
+              const StoreBadge(
+                asset: 'assets/images/applelogo.png',
+                isWorkInProgress: true,
               ),
             ],
           ),
