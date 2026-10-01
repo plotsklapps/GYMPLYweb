@@ -1,12 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class StoreBadge extends StatefulWidget {
-  const new({
-    required this.asset,
-    required this.onTap,
-    super.key,
-  });
+  const new({required this.asset, required this.onTap, super.key});
   final String asset;
   final VoidCallback onTap;
 
@@ -26,13 +24,15 @@ class _StoreBadgeState extends State<StoreBadge> {
       child: GestureDetector(
         onTap: () {
           // Log badge click
-          FirebaseAnalytics.instance.logEvent(
-            name: 'badge_click',
-            parameters: <String, Object>{
-              'badge_type': widget.asset.contains('google')
-                  ? 'play_store'
-                  : 'github',
-            },
+          unawaited(
+            FirebaseAnalytics.instance.logEvent(
+              name: 'badge_click',
+              parameters: <String, Object>{
+                'badge_type': widget.asset.contains('google')
+                    ? 'play_store'
+                    : 'github',
+              },
+            ),
           );
           widget.onTap();
         },
@@ -40,11 +40,7 @@ class _StoreBadgeState extends State<StoreBadge> {
           scale: _isHovered ? 1.05 : 1.0,
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
-          child: Image.asset(
-            widget.asset,
-            height: 45,
-            fit: BoxFit.contain,
-          ),
+          child: Image.asset(widget.asset, height: 45, fit: BoxFit.contain),
         ),
       ),
     );

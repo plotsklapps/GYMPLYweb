@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:gymplyweb/screens/screen_five.dart';
 import 'package:gymplyweb/screens/screen_four.dart';
 import 'package:gymplyweb/screens/screen_one.dart';
 import 'package:gymplyweb/screens/screen_three.dart';
@@ -17,7 +20,7 @@ class MainScroller extends StatefulWidget {
 class _MainScrollerState extends State<MainScroller> {
   final PageController _controller = PageController();
   bool _isAnimating = false;
-  static const int _pageCount = 4;
+  static const int _pageCount = 5;
 
   @override
   void initState() {
@@ -32,12 +35,14 @@ class _MainScrollerState extends State<MainScroller> {
   }
 
   void _logPageView(int index) {
-    FirebaseAnalytics.instance.logEvent(
-      name: 'screen_view',
-      parameters: <String, Object>{
-        'firebase_screen': 'screen_${index + 1}',
-        'firebase_screen_class': 'MainScroller',
-      },
+    unawaited(
+      FirebaseAnalytics.instance.logEvent(
+        name: 'screen_view',
+        parameters: <String, Object>{
+          'firebase_screen': 'screen_${index + 1}',
+          'firebase_screen_class': 'MainScroller',
+        },
+      ),
     );
   }
 
@@ -54,11 +59,7 @@ class _MainScrollerState extends State<MainScroller> {
   Future<void> _scrollToPage(int page) async {
     setState(() => _isAnimating = true);
     await _controller
-        .animateToPage(
-          page,
-          duration: 800.ms,
-          curve: Curves.easeInOutCubic,
-        )
+        .animateToPage(page, duration: 800.ms, curve: Curves.easeInOutCubic)
         .then((_) {
           if (mounted) {
             setState(() => _isAnimating = false);
@@ -79,10 +80,10 @@ class _MainScrollerState extends State<MainScroller> {
           if (details.primaryVelocity! < -100 &&
               _controller.page! < _pageCount - 1) {
             // Swipe omhoog -> Volgende pagina
-            _scrollToPage((_controller.page! + 1).round());
+            unawaited(_scrollToPage((_controller.page! + 1).round()));
           } else if (details.primaryVelocity! > 100 && _controller.page! > 0) {
             // Swipe omlaag -> Vorige pagina
-            _scrollToPage((_controller.page! - 1).round());
+            unawaited(_scrollToPage((_controller.page! - 1).round()));
           }
         },
         child: Listener(
@@ -96,6 +97,7 @@ class _MainScrollerState extends State<MainScroller> {
               ScreenTwo(),
               ScreenThree(),
               ScreenFour(),
+              ScreenFive(),
             ],
           ),
         ),
