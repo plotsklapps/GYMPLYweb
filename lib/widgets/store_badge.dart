@@ -2,7 +2,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 
 class StoreBadge extends StatefulWidget {
-  const StoreBadge({
+  const new({
     required this.asset,
     required this.onTap,
     super.key,
@@ -28,7 +28,7 @@ class _StoreBadgeState extends State<StoreBadge> {
           // Log badge click
           FirebaseAnalytics.instance.logEvent(
             name: 'badge_click',
-            parameters: {
+            parameters: <String, Object>{
               'badge_type': widget.asset.contains('google')
                   ? 'play_store'
                   : 'github',

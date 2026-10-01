@@ -5,7 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gymplyweb/widgets/scroll_hint.dart';
 
 class ScreenTwo extends StatelessWidget {
-  const ScreenTwo({super.key});
+  const new({super.key});
 
   static const List<String> _exercises = <String>[
     'barbell-bench-press',
@@ -113,7 +113,7 @@ class ScreenTwo extends StatelessWidget {
 }
 
 class _WorkoutCard extends StatelessWidget {
-  const _WorkoutCard({
+  const new({
     required this.title,
     required this.asset,
     required this.angle,
@@ -187,7 +187,7 @@ class _WorkoutCard extends StatelessWidget {
 }
 
 class _InfoCard extends StatelessWidget {
-  const _InfoCard({
+  const new({
     required this.text,
     required this.angle,
     required this.offset,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class ScrollHint extends StatelessWidget {
-  const ScrollHint({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {

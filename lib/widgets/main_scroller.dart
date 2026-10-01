@@ -8,7 +8,7 @@ import 'package:gymplyweb/screens/screen_three.dart';
 import 'package:gymplyweb/screens/screen_two.dart';
 
 class MainScroller extends StatefulWidget {
-  const MainScroller({super.key});
+  const new({super.key});
 
   @override
   State<MainScroller> createState() => _MainScrollerState();
@@ -34,7 +34,7 @@ class _MainScrollerState extends State<MainScroller> {
   void _logPageView(int index) {
     FirebaseAnalytics.instance.logEvent(
       name: 'screen_view',
-      parameters: {
+      parameters: <String, Object>{
         'firebase_screen': 'screen_${index + 1}',
         'firebase_screen_class': 'MainScroller',
       },

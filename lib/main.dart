@@ -24,7 +24,7 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
 }
 
 class GymplyWeb extends StatelessWidget {
-  const GymplyWeb({super.key});
+  const new({super.key});
 
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   static FirebaseAnalyticsObserver observer = FirebaseAnalyticsObserver(

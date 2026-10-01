@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gymplyweb/widgets/scroll_hint.dart';
 
 class ScreenThree extends StatelessWidget {
-  const ScreenThree({super.key});
+  const new({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +120,7 @@ class ScreenThree extends StatelessWidget {
 }
 
 class _FeatureBox extends StatelessWidget {
-  const _FeatureBox({
+  const new({
     required this.title,
     required this.description,
     required this.delay,

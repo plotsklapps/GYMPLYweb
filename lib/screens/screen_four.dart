@@ -5,7 +5,7 @@ import 'package:gymplyweb/widgets/store_badge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScreenFour extends StatefulWidget {
-  const ScreenFour({super.key});
+  const new({super.key});
 
   @override
   State<ScreenFour> createState() => _ScreenFourState();

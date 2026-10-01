@@ -4,7 +4,7 @@ import 'package:gymplyweb/widgets/store_badge.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ScreenOne extends StatelessWidget {
-  const ScreenOne({super.key});
+  const new({super.key});
 
   Future<void> _launchUrl(String url) async {
     final Uri uri = Uri.parse(url);
