@@ -105,4 +105,4 @@ The output will be generated in `build/web/`.
 
 ## 📄 License
 
-GYMPLY Web is open source software released under the [MIT License](LICENSE).
+GYMPLY Web is open source software released under the [MIT License](LICENSE.md).
