@@ -1,4 +1,5 @@
-{"hosting": {
+{
+  "hosting": {
     "public": "build/web",
     "ignore": [
       "firebase.json",
@@ -14,6 +15,27 @@
             "value": "max-age=31536000"
           }
         ]
+      },
+      {
+        "source": "**",
+        "headers": [
+          {
+            "key": "X-Content-Type-Options",
+            "value": "nosniff"
+          },
+          {
+            "key": "X-Frame-Options",
+            "value": "SAMEORIGIN"
+          },
+          {
+            "key": "X-XSS-Protection",
+            "value": "1; mode=block"
+          },
+          {
+            "key": "Referrer-Policy",
+            "value": "strict-origin-when-cross-origin"
+          }
+        ]
       }
     ],
     "rewrites": [
@@ -23,4 +45,16 @@
       }
     ]
   },
-"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"gymplyapp","configurations":{"web":"1:319450241016:web:6fdc418e1b99c9fe89e80d"}}}}}}
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "gymplyapp",
+          "configurations": {
+            "web": "1:319450241016:web:6fdc418e1b99c9fe89e80d"
+          }
+        }
+      }
+    }
+  }
+}
