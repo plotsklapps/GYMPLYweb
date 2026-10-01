@@ -1,19 +1,21 @@
 import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class StoreBadge extends StatefulWidget {
   const new({
     required this.asset,
     this.onTap,
     this.isWorkInProgress = false,
+    this.sourceScreen = 'unknown',
     super.key,
   });
 
   final String asset;
   final VoidCallback? onTap;
   final bool isWorkInProgress;
+  final String sourceScreen;
 
   @override
   State<StoreBadge> createState() => _StoreBadgeState();
@@ -23,67 +25,58 @@ class _StoreBadgeState extends State<StoreBadge> {
   bool _isHovered = false;
 
   void _showWipDialog(BuildContext context) {
-    unawaited(
-      FirebaseAnalytics.instance.logEvent(
-        name: 'wip_badge_click',
-        parameters: <String, Object>{'badge_type': 'app_store'},
-      ),
-    );
-
-    unawaited(
-      showDialog<void>(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: const Color(0xFF1A1A1A),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-              side: BorderSide(
-                color: const Color(0xFFFCB075).withAlpha(128),
-                width: 1.5,
-              ),
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1A1A1A),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(
+              color: const Color(0xFFFCB075).withAlpha(128),
+              width: 1.5,
             ),
-            title: const Row(
-              children: <Widget>[
-                Icon(Icons.apple, color: Color(0xFFFCB075), size: 28),
-                SizedBox(width: 10),
-                Text(
-                  'iOS VERSION COMING SOON',
-                  style: TextStyle(
-                    color: Color(0xFFFCB075),
-                    fontFamily: 'Bebas Neue',
-                    fontSize: 22,
-                    letterSpacing: 1.1,
-                  ),
-                ),
-              ],
-            ),
-            content: const Text(
-              'The GYMPLY iOS app is currently in active development. '
-              'Stay tuned for updates!',
-              style: TextStyle(
-                color: Color(0xFFDEDEDE),
-                fontFamily: 'Teko',
-                fontSize: 19,
-                height: 1.2,
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text(
-                  'GOT IT',
-                  style: TextStyle(
-                    color: Color(0xFFFCB075),
-                    fontFamily: 'Bebas Neue',
-                    fontSize: 18,
-                  ),
+          ),
+          title: const Row(
+            children: <Widget>[
+              Icon(Icons.apple, color: Color(0xFFFCB075), size: 28),
+              SizedBox(width: 10),
+              Text(
+                'iOS VERSION COMING SOON',
+                style: TextStyle(
+                  color: Color(0xFFFCB075),
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 22,
+                  letterSpacing: 1.1,
                 ),
               ),
             ],
-          );
-        },
-      ),
+          ),
+          content: const Text(
+            'The GYMPLY iOS app is currently in active development. '
+            'Stay tuned for updates!',
+            style: TextStyle(
+              color: Color(0xFFDEDEDE),
+              fontFamily: 'Teko',
+              fontSize: 19,
+              height: 1.2,
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'GOT IT',
+                style: TextStyle(
+                  color: Color(0xFFFCB075),
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -101,7 +94,7 @@ class _StoreBadgeState extends State<StoreBadge> {
             opacity: 0.85,
             child: Image.asset(widget.asset, height: 45, fit: BoxFit.contain),
           ),
-          // Sleek & small construction tape banner
+          // Compact, sleek street construction tape banner
           Transform.rotate(
             angle: -0.1,
             child: ClipRRect(
@@ -142,17 +135,29 @@ class _StoreBadgeState extends State<StoreBadge> {
       child: GestureDetector(
         onTap: () {
           if (widget.isWorkInProgress) {
+            unawaited(
+              FirebaseAnalytics.instance.logEvent(
+                name: 'badge_click_wip',
+                parameters: <String, Object>{
+                  'badge_type': 'app_store_ios',
+                  'source_screen': widget.sourceScreen,
+                },
+              ),
+            );
             _showWipDialog(context);
           } else if (widget.onTap != null) {
+            final String badgeType = widget.asset.contains('google')
+                ? 'play_store'
+                : widget.asset.contains('apple')
+                ? 'app_store'
+                : 'github';
+
             unawaited(
               FirebaseAnalytics.instance.logEvent(
                 name: 'badge_click',
                 parameters: <String, Object>{
-                  'badge_type': widget.asset.contains('google')
-                      ? 'play_store'
-                      : widget.asset.contains('apple')
-                      ? 'app_store'
-                      : 'github',
+                  'badge_type': badgeType,
+                  'source_screen': widget.sourceScreen,
                 },
               ),
             );
@@ -185,7 +190,7 @@ class HazardStripesPainter extends CustomPainter {
     const double stripeWidth = 4;
     final Path path = Path();
     for (
-      double x = 0 - size.height;
+      double x = -size.height;
       x < size.width + size.height;
       x += stripeWidth * 2
     ) {

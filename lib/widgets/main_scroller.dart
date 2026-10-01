@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gymplyweb/screens/screen_five.dart';
 import 'package:gymplyweb/screens/screen_four.dart';
@@ -21,6 +21,15 @@ class _MainScrollerState extends State<MainScroller> {
   final PageController _controller = PageController();
   bool _isAnimating = false;
   static const int _pageCount = 5;
+  int _maxPageReached = 0;
+
+  static const List<String> _screenNames = <String>[
+    'screen_1_landing',
+    'screen_2_showcase',
+    'screen_3_features',
+    'screen_4_screenshots',
+    'screen_5_reviews',
+  ];
 
   @override
   void initState() {
@@ -35,12 +44,33 @@ class _MainScrollerState extends State<MainScroller> {
   }
 
   void _logPageView(int index) {
+    if (index < 0 || index >= _screenNames.length) return;
+
+    final String screenName = _screenNames[index];
+    final bool isNewDeepest = index > _maxPageReached;
+    if (isNewDeepest) {
+      _maxPageReached = index;
+    }
+
+    // 1. Official Firebase Analytics Screen View
+    unawaited(
+      FirebaseAnalytics.instance.logScreenView(
+        screenName: screenName,
+        screenClass: 'MainScroller',
+      ),
+    );
+
+    // 2. Custom Funnel Event for Conversion Analysis
     unawaited(
       FirebaseAnalytics.instance.logEvent(
-        name: 'screen_view',
+        name: 'page_view_custom',
         parameters: <String, Object>{
-          'firebase_screen': 'screen_${index + 1}',
-          'firebase_screen_class': 'MainScroller',
+          'screen_name': screenName,
+          'page_number': index + 1,
+          'total_pages': _pageCount,
+          'max_page_reached': _maxPageReached + 1,
+          'is_new_deepest_page': isNewDeepest,
+          'is_final_page': index == _pageCount - 1,
         },
       ),
     );
