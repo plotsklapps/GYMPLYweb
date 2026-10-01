@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/gestures.dart';
-import 'package:material_ui/material_ui.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gymplyweb/screens/screen_five.dart';
 import 'package:gymplyweb/screens/screen_four.dart';
 import 'package:gymplyweb/screens/screen_one.dart';
 import 'package:gymplyweb/screens/screen_three.dart';
 import 'package:gymplyweb/screens/screen_two.dart';
+import 'package:material_ui/material_ui.dart';
 
 class MainScroller extends StatefulWidget {
   const new({super.key});
@@ -69,8 +69,8 @@ class _MainScrollerState extends State<MainScroller> {
           'page_number': index + 1,
           'total_pages': _pageCount,
           'max_page_reached': _maxPageReached + 1,
-          'is_new_deepest_page': isNewDeepest,
-          'is_final_page': index == _pageCount - 1,
+          'is_new_deepest_page': isNewDeepest ? 1 : 0,
+          'is_final_page': index == _pageCount - 1 ? 1 : 0,
         },
       ),
     );

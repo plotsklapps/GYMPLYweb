@@ -2,12 +2,14 @@ import 'dart:async';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StoreBadge extends StatefulWidget {
   const new({
     required this.asset,
     this.onTap,
     this.isWorkInProgress = false,
+    this.isGitHub = false,
     this.sourceScreen = 'unknown',
     super.key,
   });
@@ -15,6 +17,7 @@ class StoreBadge extends StatefulWidget {
   final String asset;
   final VoidCallback? onTap;
   final bool isWorkInProgress;
+  final bool isGitHub;
   final String sourceScreen;
 
   @override
@@ -23,6 +26,13 @@ class StoreBadge extends StatefulWidget {
 
 class _StoreBadgeState extends State<StoreBadge> {
   bool _isHovered = false;
+
+  Future<void> _launchUrl(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri)) {
+      throw Exception('Could not launch $url');
+    }
+  }
 
   void _showWipDialog(BuildContext context) {
     showDialog<void>(
@@ -80,6 +90,103 @@ class _StoreBadgeState extends State<StoreBadge> {
     );
   }
 
+  void _showGitHubDialog(BuildContext context) {
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: const Color(0xFF1A1A1A),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(
+              color: const Color(0xFFFCB075).withAlpha(128),
+              width: 1.5,
+            ),
+          ),
+          title: Row(
+            children: <Widget>[
+              Image.asset('assets/images/githublogo.png', height: 28),
+            ],
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              const Text(
+                'GYMPLY is 100% open source, free forever, and ad-free. '
+                'What would you like to do?',
+                style: TextStyle(
+                  color: Color(0xFFDEDEDE),
+                  fontFamily: 'Teko',
+                  fontSize: 19,
+                  height: 1.2,
+                ),
+              ),
+              const SizedBox(height: 18),
+              _DialogOptionButton(
+                icon: Icons.download_rounded,
+                title: 'DOWNLOAD DIRECT APK',
+                subtitle: 'Get the latest Android release (.apk)',
+                onTap: () {
+                  Navigator.of(context).pop();
+                  unawaited(
+                    FirebaseAnalytics.instance.logEvent(
+                      name: 'github_dialog_action',
+                      parameters: <String, Object>{
+                        'action': 'download_apk',
+                        'source_screen': widget.sourceScreen,
+                      },
+                    ),
+                  );
+                  unawaited(
+                    _launchUrl(
+                      'https://github.com/plotsklapps/GYMPLY/releases/'
+                      'latest/download/gymply.apk',
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 12),
+              _DialogOptionButton(
+                icon: Icons.code_rounded,
+                title: 'VISIT GITHUB REPOSITORY',
+                subtitle: 'View full source code, docs & contribute',
+                onTap: () {
+                  Navigator.of(context).pop();
+                  unawaited(
+                    FirebaseAnalytics.instance.logEvent(
+                      name: 'github_dialog_action',
+                      parameters: <String, Object>{
+                        'action': 'view_source',
+                        'source_screen': widget.sourceScreen,
+                      },
+                    ),
+                  );
+                  unawaited(
+                    _launchUrl('https://github.com/plotsklapps/GYMPLY'),
+                  );
+                },
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                'CLOSE',
+                style: TextStyle(
+                  color: Color(0xFFFCB075),
+                  fontFamily: 'Bebas Neue',
+                  fontSize: 18,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Widget badgeContent;
@@ -89,12 +196,10 @@ class _StoreBadgeState extends State<StoreBadge> {
         alignment: Alignment.center,
         clipBehavior: Clip.none,
         children: <Widget>[
-          // Apple logo badge clearly visible behind
           Opacity(
             opacity: 0.85,
             child: Image.asset(widget.asset, height: 45, fit: BoxFit.contain),
           ),
-          // Compact, sleek street construction tape banner
           Transform.rotate(
             angle: -0.1,
             child: ClipRRect(
@@ -128,6 +233,9 @@ class _StoreBadgeState extends State<StoreBadge> {
       badgeContent = Image.asset(widget.asset, height: 45, fit: BoxFit.contain);
     }
 
+    final bool isGitHubBadge =
+        widget.isGitHub || widget.asset.contains('github');
+
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       onEnter: (_) => setState(() => _isHovered = true),
@@ -145,12 +253,21 @@ class _StoreBadgeState extends State<StoreBadge> {
               ),
             );
             _showWipDialog(context);
+          } else if (isGitHubBadge) {
+            unawaited(
+              FirebaseAnalytics.instance.logEvent(
+                name: 'badge_click',
+                parameters: <String, Object>{
+                  'badge_type': 'github',
+                  'source_screen': widget.sourceScreen,
+                },
+              ),
+            );
+            _showGitHubDialog(context);
           } else if (widget.onTap != null) {
             final String badgeType = widget.asset.contains('google')
                 ? 'play_store'
-                : widget.asset.contains('apple')
-                ? 'app_store'
-                : 'github';
+                : 'app_store';
 
             unawaited(
               FirebaseAnalytics.instance.logEvent(
@@ -169,6 +286,92 @@ class _StoreBadgeState extends State<StoreBadge> {
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,
           child: badgeContent,
+        ),
+      ),
+    );
+  }
+}
+
+class _DialogOptionButton extends StatefulWidget {
+  const new({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+  final VoidCallback onTap;
+
+  @override
+  State<_DialogOptionButton> createState() => _DialogOptionButtonState();
+}
+
+class _DialogOptionButtonState extends State<_DialogOptionButton> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: widget.onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 150),
+          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+          decoration: BoxDecoration(
+            color: _isHovered
+                ? const Color(0xFFFCB075).withAlpha(30)
+                : Colors.black.withAlpha(120),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: _isHovered
+                  ? const Color(0xFFFCB075)
+                  : const Color(0xFFFCB075).withAlpha(77),
+              width: 1.5,
+            ),
+          ),
+          child: Row(
+            children: <Widget>[
+              Icon(widget.icon, color: const Color(0xFFFCB075), size: 26),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.title,
+                      style: const TextStyle(
+                        color: Color(0xFFFCB075),
+                        fontFamily: 'Bebas Neue',
+                        fontSize: 18,
+                        letterSpacing: 1.1,
+                      ),
+                    ),
+                    Text(
+                      widget.subtitle,
+                      style: const TextStyle(
+                        color: Color(0xFFDEDEDE),
+                        fontFamily: 'Teko',
+                        fontSize: 15,
+                        height: 1.1,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(width: 8),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: const Color(0xFFFCB075).withAlpha(180),
+                size: 22,
+              ),
+            ],
+          ),
         ),
       ),
     );

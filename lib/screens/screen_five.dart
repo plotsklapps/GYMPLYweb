@@ -203,13 +203,10 @@ class ScreenFive extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      StoreBadge(
+                      const StoreBadge(
                         asset: 'assets/images/githublogo.png',
                         sourceScreen: 'screen_5_reviews',
-                        onTap: () => _launchUrl(
-                          'https://github.com/plotsklapps/GYMPLY/releases/latest/'
-                          'download/gymply.apk',
-                        ),
+                        isGitHub: true,
                       ),
                       const SizedBox(width: 24),
                       StoreBadge(

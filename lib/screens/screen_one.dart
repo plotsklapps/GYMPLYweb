@@ -63,19 +63,16 @@ class ScreenOne extends StatelessWidget {
 
         const SizedBox(height: 20),
 
-        // 3. Store Badges - Symmetrically sized
+        // 3. Store Badges - Symmetrically sized and wrap-aware
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              StoreBadge(
+              const StoreBadge(
                 asset: 'assets/images/githublogo.png',
                 sourceScreen: 'screen_1_landing',
-                onTap: () => _launchUrl(
-                  'https://github.com/plotsklapps/GYMPLY/releases/latest/'
-                  'download/gymply.apk',
-                ),
+                isGitHub: true,
               ),
               const SizedBox(width: 24),
               StoreBadge(
