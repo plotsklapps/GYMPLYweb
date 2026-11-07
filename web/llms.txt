@@ -17,7 +17,8 @@ The website provides a vertical scrolling presentation of GYMPLY's features acro
 - **Screen 4**: Open Source & Community.
 
 ## Links
-- [Official Website](https://gymply.app/)
+- [Official Website](https://gymply.org/)
+- [Web App / PWA](https://gymply.app/)
 - [GitHub Repository](https://github.com/plotsklapps/gymply)
-- [Sitemap](https://gymply.app/sitemap.xml)
-- [Nostr Integration Info](https://gymply.app/nostr)
+- [Sitemap](https://gymply.org/sitemap.xml)
+- [Nostr Integration Info](https://gymply.org/nostr)

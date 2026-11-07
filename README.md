@@ -2,7 +2,7 @@
 
 Official website for **GYMPLY** — The Minimalist, Privacy-First, Offline Workout Tracker for Android (and coming soon to iOS).
 
-Live at **[gymply.app](https://gymply.app)**
+Live at **[gymply.org](https://gymply.org)** • Try the Web App / PWA at **[gymply.app](https://gymply.app)**
 
 ---
 
@@ -10,18 +10,18 @@ Live at **[gymply.app](https://gymply.app)**
 
 GYMPLY is designed for fitness enthusiasts who value simplicity, complete privacy, and zero bloat. No accounts, no paywalls, no internet connection required, and 0% ads.
 
-This repository contains the full source code for the **[gymply.app](https://gymply.app)** promotional web application built with **Flutter Web**.
+This repository contains the full source code for the **[gymply.org](https://gymply.org)** promotional web application built with **Flutter Web**.
 
 ---
 
 ## 🚀 Core Web Features
 
-The website is structured as a fluid, full-screen vertical page scroller (`MainScroller`) featuring 5 interactive sections:
+The website is structured as a fluid, full-screen vertical page scroller (`MainScroller`) featuring 6 interactive sections:
 
-1. **Hero Landing Page (`ScreenOne`)**: Bold typography (`Bebas Neue` & `Teko`), core value highlights, and instant download badges for Google Play and GitHub APK.
+1. **Hero Landing Page (`ScreenOne`)**: Bold typography (`Bebas Neue` & `Teko`), core value highlights, instant download badges, and direct **Try GYMPLY on Web** PWA launcher.
 2. **Interactive Showcase (`ScreenTwo`)**: Animated stack of dynamic exercise cards representing GYMPLY's database of **4,000+ exercises**.
 3. **Pillars Grid (`ScreenThree`)**: Clean feature breakdown covering 100% privacy, zero ads/subscriptions, offline-first capabilities, and Nostr protocol integration.
-4. **App Experience (`ScreenFour`)**: Modern Material 3 `CarouselView` displaying high-resolution app screenshots.
+4. **App Experience (`ScreenFour`)**: Modern Material 3 `CarouselView` displaying high-resolution app screenshots and web app launch option.
 5. **User Reviews & Responses (`ScreenFive`)**: 5-star Google Play user reviews accompanied by official developer responses and custom avatar badges.
 6. **Work In Progress iOS Badge**: Interactive App Store badge featuring street-construction hazard tape and an informative dialog for upcoming iOS availability.
 
@@ -96,7 +96,8 @@ The output will be generated in `build/web/`.
 
 ## 🔗 Official Links
 
-- **Website**: [gymply.app](https://gymply.app)
+- **Website**: [gymply.org](https://gymply.org)
+- **Web App / PWA**: [gymply.app](https://gymply.app)
 - **App Source Code**: [plotsklapps/GYMPLY](https://github.com/plotsklapps/GYMPLY)
 - **Google Play Store**: [GYMPLY on Play Store](https://play.google.com/store/apps/details?id=dev.plotsklapps.gymply)
 - **Latest Android APK**: [GitHub Releases](https://github.com/plotsklapps/GYMPLY/releases/latest)
