@@ -267,7 +267,9 @@ class _StoreBadgeState extends State<StoreBadge> {
           } else if (widget.onTap != null) {
             final String badgeType = widget.asset.contains('google')
                 ? 'play_store'
-                : 'app_store';
+                : widget.asset.contains('launchPWA')
+                    ? 'web_pwa'
+                    : 'app_store';
 
             unawaited(
               FirebaseAnalytics.instance.logEvent(

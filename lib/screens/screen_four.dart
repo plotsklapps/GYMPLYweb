@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:gymplyweb/widgets/scroll_hint.dart';
 import 'package:gymplyweb/widgets/store_badge.dart';
-import 'package:gymplyweb/widgets/web_app_button.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -114,38 +113,37 @@ class _ScreenFourState extends State<ScreenFour> {
             // Download Buttons
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      StoreBadge(
-                        asset: 'assets/images/githublogo.png',
-                        sourceScreen: 'screen_4_screenshots',
-                        onTap: () => _launchUrl(
-                          'https://github.com/plotsklapps/GYMPLY/releases/latest/'
-                          'download/gymply.apk',
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      StoreBadge(
-                        asset: 'assets/images/googlelogo.png',
-                        sourceScreen: 'screen_4_screenshots',
-                        onTap: () => _launchUrl(
-                          'https://play.google.com/store/apps/details?id=dev.plotsklapps.gymply',
-                        ),
-                      ),
-                      const SizedBox(width: 24),
-                      const StoreBadge(
-                        asset: 'assets/images/applelogo.png',
-                        sourceScreen: 'screen_4_screenshots',
-                        isWorkInProgress: true,
-                      ),
-                    ],
+                  StoreBadge(
+                    asset: 'assets/images/githublogo.png',
+                    sourceScreen: 'screen_4_screenshots',
+                    onTap: () => _launchUrl(
+                      'https://github.com/plotsklapps/GYMPLY/releases/latest/'
+                      'download/gymply.apk',
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  const WebAppButton(sourceScreen: 'screen_4_screenshots'),
+                  const SizedBox(width: 24),
+                  StoreBadge(
+                    asset: 'assets/images/googlelogo.png',
+                    sourceScreen: 'screen_4_screenshots',
+                    onTap: () => _launchUrl(
+                      'https://play.google.com/store/apps/details?id=dev.plotsklapps.gymply',
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  const StoreBadge(
+                    asset: 'assets/images/applelogo.png',
+                    sourceScreen: 'screen_4_screenshots',
+                    isWorkInProgress: true,
+                  ),
+                  const SizedBox(width: 24),
+                  StoreBadge(
+                    asset: 'assets/images/launchPWA.png',
+                    sourceScreen: 'screen_4_screenshots',
+                    onTap: () => _launchUrl('https://gymply.app'),
+                  ),
                 ],
               ),
             ),
