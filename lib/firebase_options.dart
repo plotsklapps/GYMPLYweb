@@ -53,12 +53,12 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDxd6cu50FNP0l-5Ys_uYTri7CfmaiRb3M',
-    appId: '1:319450241016:web:6fdc418e1b99c9fe89e80d',
-    messagingSenderId: '319450241016',
-    projectId: 'gymplyapp',
-    authDomain: 'gymplyapp.firebaseapp.com',
-    storageBucket: 'gymplyapp.firebasestorage.app',
-    measurementId: 'G-3WDPX7LEXM',
+    apiKey: 'AIzaSyDD7v8kbpJ2qq7sKUmfupAkbiXcgxa5Xh4',
+    appId: '1:824101862049:web:c521e987f8870d968f4ee0',
+    messagingSenderId: '824101862049',
+    projectId: 'gymplyweb',
+    authDomain: 'gymplyweb.firebaseapp.com',
+    storageBucket: 'gymplyweb.firebasestorage.app',
+    measurementId: 'G-02DW4XHSJD',
   );
 }

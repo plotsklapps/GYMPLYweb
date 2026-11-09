@@ -17,9 +17,9 @@
     "platforms": {
       "dart": {
         "lib/firebase_options.dart": {
-          "projectId": "gymplyapp",
+          "projectId": "gymplyweb",
           "configurations": {
-            "web": "1:319450241016:web:6fdc418e1b99c9fe89e80d"
+            "web": "1:824101862049:web:c521e987f8870d968f4ee0"
           }
         }
       }
